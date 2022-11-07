@@ -19,6 +19,7 @@ class Game
       @board += "\n▍ #{@values[0][5-c]} | #{@values[1][5-c]} | #{@values[2][5-c]} | #{@values[3][5-c]} | #{@values[4][5-c]} | #{@values[5][5-c]} | #{@values[6][5-c]} ▍"
     end
     @board += "\n▍▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▍"
+    system('clear')
     puts @board
   end
 
@@ -56,6 +57,7 @@ class Game
       for array in @values
 
         if check_list.length == 4
+          puts "\nGame over! #{@player.capitalize} won"
           return true
         end
         if array[i] == ' ' || array[i] != check_list[0]
@@ -75,6 +77,7 @@ class Game
         
         # Vertical 
         if check_list.length == 4
+          puts "Game over! #{@player} won"
           return true
         end
         if (item == ' ' || item != check_list[0])
@@ -87,6 +90,7 @@ class Game
         if i <= 3 && j <= 4 
           arr = [@values[i][j], @values[i+1][j+1], @values[i+2][j+2], @values[i+3][j+3]]
           if arr.uniq.size <= 1 && arr[0] != ' ' && arr[0] != nil
+            puts "Game over! #{@player} won"
             return true
           end
         end
@@ -97,10 +101,3 @@ class Game
     return false
   end
 end
-
-game = Game.new
-until game.check
-  pos = gets.chomp
-  game.play(pos)
-end
-puts "Game over!"
