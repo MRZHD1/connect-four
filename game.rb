@@ -1,13 +1,13 @@
 class Game
   def initialize
-    @values = nil
+    @values = []
     @board = ''
     @player = 'yellow'
     update_board()
   end
 
   def update_board
-    if @values == nil
+    if @values == []
       @values = Array.new(7)
       7.times do |i|
         @values[i] = Array.new(6, " ")
@@ -46,9 +46,12 @@ class Game
   end
 
   def check
-    # Horizontal
+    if @values == []
+      return false
+    end
     check_list = []
 
+    # Horizontal
     6.times do |i|
       for array in @values
 
@@ -60,17 +63,17 @@ class Game
         else
           check_list += [array[i]]
         end
-
       end
     end
 
-    
+    i = 0
     for array in @values
+      j = 0
       check_list = []
 
       for item in array
+        
         # Vertical 
-
         if check_list.length == 4
           return true
         end
@@ -80,8 +83,16 @@ class Game
           check_list += [item]
         end
 
-        
+        # Diagonal
+        if i <= 3 && j <= 4 
+          arr = [@values[i][j], @values[i+1][j+1], @values[i+2][j+2], @values[i+3][j+3]]
+          if arr.uniq.size <= 1 && arr[0] != ' ' && arr[0] != nil
+            return true
+          end
+        end
+        j += 1
       end
+      i += 1
     end
     return false
   end
